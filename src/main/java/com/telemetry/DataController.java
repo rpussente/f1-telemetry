@@ -22,6 +22,11 @@ public class DataController {
     return dataService.get();
   }
 
+  @RequestMapping("/time")
+  public List<Float> time() {
+    return dataService.get().stream().map(Data::time).collect(Collectors.toList());
+  }
+
   @RequestMapping("/distance")
   public List<Float> totalDistance() {
     return dataService.get().stream().map(Data::totalDistance).collect(Collectors.toList());
