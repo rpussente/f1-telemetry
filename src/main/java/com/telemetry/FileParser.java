@@ -42,8 +42,12 @@ public class FileParser {
     return lits;
   }
 
-  private static Data parseData(final byte[] bytes) {
-    final ByteBuffer buffer = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN);
+  public static Data parseData(final byte[] bytes) {
+    return parseData(ByteBuffer.wrap(bytes));
+  }
+
+  public static Data parseData(final ByteBuffer buffer) {
+    buffer.order(ByteOrder.LITTLE_ENDIAN);
 
     final float m_time = buffer.getFloat();
     final float m_lapTime = buffer.getFloat();
@@ -123,7 +127,6 @@ public class FileParser {
             m_in_pits);
 
     return data;
-
 
     //
     //    float m_sector;	// 0 = sector1, 1 = sector2, 2 = sector3
