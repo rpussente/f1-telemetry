@@ -42,11 +42,11 @@ public class FileParser {
     return lits;
   }
 
-  public static Data parseData(final byte[] bytes) {
+  private static Data parseData(final byte[] bytes) {
     return parseData(ByteBuffer.wrap(bytes));
   }
 
-  public static Data parseData(final ByteBuffer buffer) {
+  private static Data parseData(final ByteBuffer buffer) {
     buffer.order(ByteOrder.LITTLE_ENDIAN);
 
     final float m_time = buffer.getFloat();
@@ -95,38 +95,35 @@ public class FileParser {
 
     final float m_in_pits = buffer.getFloat();
 
-    final Data data =
-        Data.create(
-            m_time,
-            m_lapTime,
-            m_lapDistance,
-            m_totalDistance,
-            worldSpacePosition,
-            m_speed,
-            worldSpaceVelocity,
-            worldSpaceRightDirection,
-            worldSpaceForwardDirection,
-            suspensionPosition,
-            suspensionVelocity,
-            wheelSpeed,
-            m_throttle,
-            m_steer,
-            m_brake,
-            m_clutch,
-            m_gear,
-            gForce,
-            m_lap,
-            m_engineRate,
-            m_sli_pro_native_support,
-            m_car_position,
-            kers,
-            m_drs,
-            m_traction_control,
-            m_anti_lock_brakes,
-            fuel,
-            m_in_pits);
-
-    return data;
+    return Data.create(
+        m_time,
+        m_lapTime,
+        m_lapDistance,
+        m_totalDistance,
+        worldSpacePosition,
+        m_speed,
+        worldSpaceVelocity,
+        worldSpaceRightDirection,
+        worldSpaceForwardDirection,
+        suspensionPosition,
+        suspensionVelocity,
+        wheelSpeed,
+        m_throttle,
+        m_steer,
+        m_brake,
+        m_clutch,
+        m_gear,
+        gForce,
+        m_lap,
+        m_engineRate,
+        m_sli_pro_native_support,
+        m_car_position,
+        kers,
+        m_drs,
+        m_traction_control,
+        m_anti_lock_brakes,
+        fuel,
+        m_in_pits);
 
     //
     //    float m_sector;	// 0 = sector1, 1 = sector2, 2 = sector3
