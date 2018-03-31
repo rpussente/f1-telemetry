@@ -38,7 +38,7 @@ class App extends Component {
         this.setConnected(true);
         stompClient.subscribe('/topic/status', response => {
           const status = JSON.parse(response.body);
-          this.setStatus(status.rate, status.count);
+          this.setStatus(status.rate, status.total);
         });
     });
   }
