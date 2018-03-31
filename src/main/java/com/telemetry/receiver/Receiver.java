@@ -1,5 +1,6 @@
 package com.telemetry.receiver;
 
+import com.telemetry.Status;
 import java.io.Closeable;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -13,8 +14,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
@@ -33,10 +36,18 @@ public class Receiver implements Closeable {
 
   private final ExecutorService executor = Executors.newCachedThreadPool();
 
+  private final SimpMessagingTemplate template;
+
+  @Autowired
+  public Receiver(final SimpMessagingTemplate template) {
+    this.template = template;
+  }
+
   @Scheduled(fixedDelay = 1000)
   public void publishStatus() {
-    final long current = counter.get();
-    System.out.println(current - previous.getAndSet(current) + "msgs/s");
+    final long total = counter.get();
+    final long rate = total - previous.getAndSet(total);
+    template.convertAndSend("/topic/status", Status.create(rate, total));
   }
 
   @PostConstruct
