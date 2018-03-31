@@ -26,6 +26,6 @@ public class WebSocketPublisher {
       l = 0;
       counter.set(0);
     }
-    template.convertAndSend("/topic/data", dataService.get().get(l));
+    template.convertAndSend("/topic/test", dataService.get().get(l));
   }
 }
